@@ -71,6 +71,12 @@ Agent 會：
 
 要互動投票 / 文字雲？本版不含（需資料庫）。請改用 [`clasp-gas-guide`](https://github.com/mathruffian-dot/clasp-gas-guide) 做 GAS Web App，把短網址放進簡報。
 
+### 想放到網路上？三種選擇（由簡到繁）
+
+1. **直接用瀏覽器播放**（預設，零帳號）：雙擊 `index.html`。
+2. **GAS Web App 上線**（只要 Google 帳號）：用 `HtmlService` 純當網頁伺服器，**不需要連 Google Sheets**，免 GitHub / 免 Netlify。作法見 SKILL.md 第 7 節。
+3. **GitHub Pages**（需 GitHub 帳號）：要公開原始碼 + 自訂網址時才用。
+
 ---
 
 ## 📁 Skill 結構

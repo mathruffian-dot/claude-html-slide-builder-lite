@@ -156,9 +156,9 @@ description: |
 
 ---
 
-## 5. 互動需求怎麼辦（本版不含資料庫）
+## 5. 課堂互動（用 GAS，不用 Firebase / 任何資料庫）
 
-本研習版**不含 Firebase 即時互動**（文字雲 / 投票需要資料庫金鑰）。若課堂要即時互動：
+本版**不串接任何資料庫**。若課堂要即時投票 / 文字雲：
 
 - 用 [`clasp-gas-guide`](https://github.com/mathruffian-dot/clasp-gas-guide) 做一個 **GAS Web App** 投票 / 提問頁（只要 Google 帳號、零金鑰）。
 - 把該頁的短網址 + QR Code 放進簡報的一張 section 即可。
@@ -203,6 +203,24 @@ document.getElementById('viz-slider').addEventListener('input', function() {
 ▶️ 用瀏覽器打開即可播放（F 全螢幕、方向鍵翻頁）
 ```
 
+### 選配：用 GAS Web App 上線（免 Sheets、免 GitHub、免 Netlify）
+
+只要 Google 帳號就能把這份 `index.html` 掛上網 —— GAS 的 `HtmlService` 可以**純當網頁伺服器，不需要連 Google Sheets**：
+
+1. 到 [script.google.com](https://script.google.com) 新建專案。
+2. 新增一個 HTML 檔（檔名例如 `index`），把產出的 `index.html` 內容整段貼進去。
+3. 後端 `Code.gs` 只要一個 `doGet`（**沒有 doPost、沒有 SpreadsheetApp、不建任何試算表**）：
+   ```javascript
+   function doGet() {
+     return HtmlService.createHtmlOutputFromFile('index')
+       .addMetaTag('viewport', 'width=device-width, initial-scale=1')
+       .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
+   }
+   ```
+4. 部署 → 網頁應用程式 → 存取權選「任何人」→ 取得網址（可再用 is.gd 縮短 + 產 QR Code）。
+
+> 注意：GAS 會把頁面包在 iframe 沙箱裡，但 Reveal.js + CDN 仍正常運作；全程不需建立或連接任何試算表。
+
 ### 選配：部署到 GitHub Pages（需 GitHub 帳號）
 若使用者有 GitHub 帳號且想要公開網址才做：
 
@@ -230,7 +248,7 @@ Phase 1: 輸出大綱 → 等待確認 ← 必須停在這裡
 Phase 2: 生成 HTML 骨架（含漸層底圖 CSS）
 Phase 3: 填內容（Emoji/SVG 圖標、VIZ 滑桿）
 Phase 4: 請使用者用瀏覽器預覽
-Phase 5:（選配）部署 GitHub Pages
+Phase 5:（選配）上線：GAS Web App（免 Sheets）或 GitHub Pages
 ```
 
 ---
